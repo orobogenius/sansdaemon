@@ -6,15 +6,15 @@ trait SansDaemonWorkerTrait
 {
     /**
      * Number of jobs processed
-     * 
+     *
      * @var int
-     * 
+     *
     */
     protected $jobsProcessed = 0;
-    
+
     /**
      * Process the queue sans-daemon mode
-     * 
+     *
      * @param  string  $connection
      * @param  string  $queue
      * @return void
@@ -35,18 +35,20 @@ trait SansDaemonWorkerTrait
      */
     public function processJobs($connectionName, $queue)
     {
-        while ($this->jobShouldProcess($connectionName, $queue, $this->gatherWorkerOptions())) {
-            $this->worker->runNextJob($connectionName, $queue, parent::gatherWorkerOptions());
+        foreach (explode(',', $queue) as $queue) {
+            while ($this->jobShouldProcess($connectionName, $queue, $this->gatherWorkerOptions())) {
+                $this->worker->runNextJob($connectionName, $queue, parent::gatherWorkerOptions());
 
-            if ($this->option('jobs')) {
-                $this->jobsProcessed += 1;
+                if ($this->option('jobs')) {
+                    $this->jobsProcessed += 1;
+                }
             }
         }
     }
 
     /**
      * Determine if the next job on the queue should be processed
-     * 
+     *
      * @param  string  $connectionName
      * @param  string  $queue
      * @param  \Illuminate\Queue\WorkerOptions  $options
@@ -54,7 +56,7 @@ trait SansDaemonWorkerTrait
     */
     protected function jobShouldProcess($connectionName, $queue, $options)
     {
-        if ($options->jobs) {            
+        if ($options->jobs) {
             return $this->getSize($connectionName, $queue) != 0
                     && $this->jobsProcessed != (int) $options->jobs;
         }
