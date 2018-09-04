@@ -56,12 +56,31 @@ trait SansDaemonWorkerTrait
     */
     protected function jobShouldProcess($connectionName, $queue, $options)
     {
+        if ($this->isOverMaxExecutionTime($options)) {
+            return false;
+        }
         if ($options->jobs) {
             return $this->getSize($connectionName, $queue) != 0
                     && $this->jobsProcessed != (int) $options->jobs;
         }
 
         return $this->getSize($connectionName, $queue) != 0;
+    }
+
+    /**
+     * Check if worker is running longer, than set max execution time
+     *
+     * @param  \Illuminate\Queue\WorkerOptions
+     * @return bool
+     */
+    protected function isOverMaxExecutionTime($options)
+    {
+        // Is set 0 or less -> worker can run forever
+        if ($options->maxExecutionTime <= 0) {
+            return false;
+        }
+        $elapsedTime = microtime(true) - LARAVEL_START;
+        return $elapsedTime > $options->maxExecutionTime;
     }
 
     /**

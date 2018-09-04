@@ -32,6 +32,9 @@ Since this package extends laravel's `WorkCommand`, it takes exactly all the arg
 
 - `--sansdaemon` option tell the worker to process jobs on the queue without running in daemon mode.
 - `--jobs` (default: 0, optional) - It allows you to specify the number of jobs to process each time the command runs. The default value `0` means it'll process all available jobs in the queue.
+- `--max_exec_time` (default: `ini_get('max_execution_time') - 5s`, optional) - On some webhostings your scripts will be killed, if exceed some amount of time. To prevent this behavior on really full queue, worker will stop after `--max_exec_time`.
+**Note**: `0`(zero) means run forever. This is automatical if run from CLI.
+**Note2**: This will not prevent max time exceeded error. Just will not run next job, if script is reaching its limits.
 
 ## Testing
 // TODO
