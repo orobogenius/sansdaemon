@@ -3,7 +3,6 @@
 namespace Queueworker\SansDaemon\Console;
 
 use Illuminate\Queue\Console\WorkCommand as BaseWorkCommand;
-use Illuminate\Contracts\Queue\Job;
 use Illuminate\Queue\Worker;
 use Queueworker\SansDaemon\WorkerOptions;
 use Queueworker\SansDaemon\Traits\SansDaemonWorkerTrait;
