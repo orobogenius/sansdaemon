@@ -8,7 +8,6 @@ trait SansDaemonWorkerTrait
      * Number of jobs processed.
      *
      * @var int
-     *
      */
     protected $jobsProcessed = 0;
 
@@ -17,7 +16,7 @@ trait SansDaemonWorkerTrait
      *
      * @param string $connection
      * @param string $queue
-     * 
+     *
      * @return void
      */
     protected function runSansDaemon($connection, $queue)
@@ -30,9 +29,9 @@ trait SansDaemonWorkerTrait
      *
      * @param string $connectionName
      * @param string $queue
-     * 
+     *
      * @throws \Throwable
-     * 
+     *
      * @return void
      */
     public function processJobs($connectionName, $queue)
@@ -54,7 +53,7 @@ trait SansDaemonWorkerTrait
      * @param string                           $connectionName
      * @param string                           $queue
      * @param \Illuminate\Queue\WorkerOptions  $options
-     * 
+     *
      * @return bool
      */
     protected function jobShouldProcess($connectionName, $queue, $options)
@@ -75,7 +74,7 @@ trait SansDaemonWorkerTrait
      * Check if worker is running longer, than set max execution time.
      *
      * @param \Illuminate\Queue\WorkerOptions $options
-     * 
+     *
      * @return bool
      */
     protected function isOverMaxExecutionTime($options)
@@ -86,6 +85,7 @@ trait SansDaemonWorkerTrait
         }
 
         $elapsedTime = microtime(true) - LARAVEL_START;
+
         return $elapsedTime > $options->maxExecutionTime;
     }
 
@@ -94,7 +94,7 @@ trait SansDaemonWorkerTrait
      *
      * @param string $connectionName
      * @param string $queue
-     * 
+     *
      * @return int
      */
     protected function getSize($connectionName, $queue)
