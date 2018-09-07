@@ -1,10 +1,7 @@
 <?php
 
 use Orchestra\Testbench\TestCase;
-use Queueworker\SansDaemon\Console\WorkCommand;
 use Illuminate\Queue\WorkerOptions;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Queue\Events\JobProcessing;
 
 class SansDaemonTest extends TestCase
 {
@@ -23,7 +20,7 @@ class SansDaemonTest extends TestCase
     public function testQueueWorkerCanRunInSansDaemonMode()
     {
         $exitCode = $this->artisan->call('queue:work', [
-            '--sansdaemon' => true
+            '--sansdaemon' => true,
         ]);
 
         $this->assertEquals(0, $exitCode);
@@ -34,7 +31,7 @@ class SansDaemonTest extends TestCase
         $this->worker->setManager($this->getManager('sync', ['default' => [$job = new FakeWorkerJob]]));
 
         $exitCode = $this->artisan->call('queue:work', [
-            '--sansdaemon' => true
+            '--sansdaemon' => true,
         ]);
 
         $this->assertEquals(0, $exitCode);
@@ -44,13 +41,13 @@ class SansDaemonTest extends TestCase
     public function testQueueWorkerCanExecutesNJobs()
     {
         $jobs = [
-            'default' => [new FakeWorkerJob, new FakeWorkerJob, new FakeWorkerJob]
+            'default' => [new FakeWorkerJob, new FakeWorkerJob, new FakeWorkerJob],
         ];
 
         $this->worker->setManager($this->getManager('sync', $jobs));
-        
+
         $exitCode = $this->artisan->call('queue:work', [
-            '--sansdaemon' => true, '--jobs' => 2
+            '--sansdaemon' => true, '--jobs' => 2,
         ]);
 
         $this->assertEquals(0, $exitCode);
@@ -61,13 +58,13 @@ class SansDaemonTest extends TestCase
     {
         $jobs = [
             'high' => [new FakeWorkerJob, new FakeWorkerJob],
-            'default' => [new FakeWorkerJob]
+            'default' => [new FakeWorkerJob],
         ];
 
         $this->worker->setManager($this->getManager('sync', $jobs));
 
         $exitCode = $this->artisan->call('queue:work', [
-            '--sansdaemon' => true, '--jobs' => 3, '--queue' => 'high,default'
+            '--sansdaemon' => true, '--jobs' => 3, '--queue' => 'high,default',
         ]);
 
         $this->assertEquals(0, $exitCode);
@@ -78,22 +75,22 @@ class SansDaemonTest extends TestCase
     public function testQueueWorkerExitsAfterMaxExecTime()
     {
         $jobs = [
-            'default' => [new FakeWorkerJob(true, 10), new FakeWorkerJob(true)]
+            'default' => [new FakeWorkerJob(true, 10), new FakeWorkerJob(true)],
         ];
 
         $this->worker->setManager($this->getManager('sync', $jobs));
 
         $exitCode = $this->artisan->call('queue:work', [
-            '--sansdaemon' => true, '--max_exec_time' => 5
+            '--sansdaemon' => true, '--max_exec_time' => 5,
         ]);
 
         $this->assertEquals(0, $exitCode);
         $this->assertEquals(1, $this->worker->getManager()->connection('sync')->size('default'));
     }
 
-    ######################
-    # Helpers 
-    ######################
+    //#####################
+    // Helpers
+    //#####################
     protected function getPackageProviders($app)
     {
         return ['Queueworker\SansDaemon\SansDaemonServiceProvider'];
@@ -110,9 +107,9 @@ class SansDaemonTest extends TestCase
     }
 }
 
-######################
-# Fakes 
-######################
+//#####################
+// Fakes
+//#####################
 class FakeWorkerManager extends \Illuminate\Queue\QueueManager
 {
     public $connections = [];
@@ -163,7 +160,6 @@ class FakeWorkerJob extends \Illuminate\Queue\Jobs\Job implements \Illuminate\Co
     public $connectionName;
     public $shouldSleep;
     public $sleepFor;
-
 
     public function __construct($shouldSleep = false, $sleepFor = 0)
     {
@@ -225,7 +221,7 @@ class FakeWorkerJob extends \Illuminate\Queue\Jobs\Job implements \Illuminate\Co
     {
         $this->failed = true;
     }
-    
+
     public function failed($e)
     {
         $this->markAsFailed();
@@ -256,5 +252,4 @@ class FakeWorkerJob extends \Illuminate\Queue\Jobs\Job implements \Illuminate\Co
     {
         $this->connectionName = $name;
     }
-    
 }
