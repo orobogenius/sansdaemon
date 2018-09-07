@@ -4,7 +4,6 @@ namespace Queueworker\SansDaemon\Console;
 
 use Illuminate\Queue\Console\WorkCommand as BaseWorkCommand;
 use Illuminate\Queue\Worker;
-use Queueworker\SansDaemon\WorkerOptions;
 use Queueworker\SansDaemon\Traits\SansDaemonWorkerTrait;
 
 class WorkCommand extends BaseWorkCommand
@@ -14,7 +13,8 @@ class WorkCommand extends BaseWorkCommand
     /**
      * Create a new queue work command.
      *
-     * @param  \Illuminate\Queue\Worker $worker
+     * @param \Illuminate\Queue\Worker $worker
+     * 
      * @return void
      */
     public function __construct(Worker $worker)
@@ -40,8 +40,9 @@ class WorkCommand extends BaseWorkCommand
     /**
      * Run the worker instance.
      *
-     * @param  string  $connection
-     * @param  string  $queue
+     * @param  string $connection
+     * @param  string $queue
+     * 
      * @return array
      */
     protected function runWorker($connection, $queue)

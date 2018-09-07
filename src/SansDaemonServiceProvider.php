@@ -40,4 +40,5 @@ class SansDaemonServiceProvider extends QueueServiceProvider
             return new WorkCommand($app['queue.worker']);
         });
     }
+    
 }
