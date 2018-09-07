@@ -28,7 +28,7 @@ php artisan queue:work --sansdaemon
 ```
 
 ## Argument and Options
-Since this package extends laravel's `WorkCommand`, it takes exactly all the arguments and options the original WorkCommand takes with two added options:
+Since this package extends laravel's `WorkCommand`, it takes exactly all the arguments and options the original WorkCommand takes with three added options:
 
 - `--sansdaemon` option tell the worker to process jobs on the queue without running in daemon mode.
 - `--jobs` (default: 0, optional) - It allows you to specify the number of jobs to process each time the command runs. The default value `0` means it'll process all available jobs in the queue.
