@@ -16,10 +16,21 @@
     "require": {
         "php": ">=5.6.4"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^7.3",
+        "mockery/mockery": "^1.0",
+        "laravel/framework": "5.6.*",
+        "orchestra/testbench": "~3.0"
+    },
     "autoload": {
         "psr-4": {
             "Queueworker\\SansDaemon\\": "src"
         }        
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Queueworker\\SansDaemon\\": "tests"
+        }
     },
     "extra": {
         "laravel": {
@@ -27,5 +38,10 @@
                 "Queueworker\\SansDaemon\\SansDaemonServiceProvider"
             ]
         }
-    }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
