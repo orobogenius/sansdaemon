@@ -1,5 +1,10 @@
 # SansDaemon
 
+[![Build Status](https://travis-ci.org/orobogenius/sansdaemon.svg?branch=master)](https://travis-ci.org/orobogenius/sansdaemon)
+[![Latest Stable Version](https://poser.pugx.org/queueworker/sansdaemon/v/stable)](https://packagist.org/packages/queueworker/sansdaemon)
+[![Total Downloads](https://poser.pugx.org/queueworker/sansdaemon/downloads)](https://packagist.org/packages/queueworker/sansdaemon)
+[![License](https://poser.pugx.org/queueworker/sansdaemon/license)](https://packagist.org/packages/queueworker/sansdaemon)
+## Introduction
 Batch process Laravel Queue without a daemon; Processes all jobs on the queue(s) and exits without running on daemon mode. This is useful in cases where you just want to process jobs on the queue and exit the worker process so they don't pile up in memory.
 
 ## Installation
@@ -39,7 +44,9 @@ Since this package extends laravel's `WorkCommand`, it takes exactly all the arg
 - This option will not prevent `Maximum execution time exceeded` error, it'll try to avoid it by not running the next job on the queue if the script is reaching its [max_execution_time](http://php.net/manual/en/info.configuration.php#ini.max-execution-time)
 
 ## Testing
-// TODO
+```
+composer test
+```
 
 ## License
 
