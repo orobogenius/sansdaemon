@@ -8,16 +8,6 @@ use Queueworker\SansDaemon\Console\WorkCommand;
 class SansDaemonServiceProvider extends QueueServiceProvider
 {
     /**
-     * Bootstrap the application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
-    }
-
-    /**
      * Register the application services.
      *
      * @return void
