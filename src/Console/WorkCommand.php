@@ -19,7 +19,6 @@ class WorkCommand extends BaseWorkCommand
      */
     public function __construct(Worker $worker)
     {
-        // Constant added in Laravel 5.5
         if (! defined('LARAVEL_START')) {
             define('LARAVEL_START', microtime(true));
         }

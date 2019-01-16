@@ -26,7 +26,7 @@ class SansDaemonServiceProvider extends QueueServiceProvider
      */
     protected function registerWorkCommand()
     {
-        $this->app->singleton('command.queue.work', function ($app) {
+        $this->app->extend('command.queue.work', function ($command, $app) {
             return new WorkCommand($app['queue.worker']);
         });
     }

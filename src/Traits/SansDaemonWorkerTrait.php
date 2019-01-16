@@ -79,7 +79,6 @@ trait SansDaemonWorkerTrait
      */
     protected function isOverMaxExecutionTime($options)
     {
-        //Is set 0 or less -> worker can run forever
         if ($options->maxExecutionTime <= 0) {
             return false;
         }
