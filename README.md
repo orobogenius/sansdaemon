@@ -24,7 +24,7 @@ Queueworker\SansDaemon\SansDaemonServiceProvider::class,
 ```
 
 ## Usage
-SansDaemon is a console application that extends the functionality of laravel's `WorkCommand` - ```Illuminate\Queue\Console\WorkCommand```. _See_ [Laravel Queue](https://laravel.com/docs/5.6/queues) documentation.
+SansDaemon is a console application that extends the functionality of laravel's `WorkCommand` - ```Illuminate\Queue\Console\WorkCommand```. _See_ [Laravel Queue](https://laravel.com/docs/queues) documentation.
 
 To run the queue worker sans-daemon mode, simply add the ```--sansdaemon``` option to the original laravel queue worker command:
 
@@ -37,7 +37,7 @@ Since this package extends laravel's `WorkCommand`, it takes exactly all the arg
 
 - `--sansdaemon` option tell the worker to process jobs on the queue without running in daemon mode.
 - `--jobs` (default: 0, optional) - It allows you to specify the number of jobs to process each time the command runs. The default value `0` means it'll process all available jobs in the queue.
-- `--max_exec_time` (default: `ini_get('max_execution_time') - 5s`, optional) - On some webhosts, your scripts will be killed, if it exceeds some amount of time. To prevent this behavior on really full queue, worker will stop after `--max_exec_time`. This is especially useful if you're running this command via your application's route or controller. See [Laravel Documentation](https://laravel.com/docs/5.6/artisan#programmatically-executing-commands) on how to run your queue programmatically.
+- `--max_exec_time` (default: `ini_get('max_execution_time') - 5s`, optional) - On some webhosts, your scripts will be killed, if it exceeds some amount of time. To prevent this behavior on really full queue, worker will stop after `--max_exec_time`. This is especially useful if you're running this command via your application's route or controller. See [Laravel Documentation](https://laravel.com/docs/artisan#programmatically-executing-commands) on how to run your queue programmatically.
 
 #### Note on `--max_exec_time`
 - `0` (zero) means the worker will run forever, which in this context means until the worker process is done. This is the default behavior  when run from CLI.
