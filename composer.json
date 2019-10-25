@@ -12,7 +12,7 @@
         "email": "orobolucky@gmail.com"
     }],
     "require": {
-        "php": "^7.3",
+        "php": "^7.2",
         "illuminate/support": "6.0.*"
     },
     "require-dev": {
