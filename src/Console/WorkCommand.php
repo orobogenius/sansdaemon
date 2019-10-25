@@ -3,9 +3,9 @@
 namespace Queueworker\SansDaemon\Console;
 
 use Illuminate\Queue\Worker;
+use Illuminate\Contracts\Cache\Repository as Cache;
 use Queueworker\SansDaemon\Traits\SansDaemonWorkerTrait;
 use Illuminate\Queue\Console\WorkCommand as BaseWorkCommand;
-use Illuminate\Contracts\Cache\Repository as Cache;
 
 class WorkCommand extends BaseWorkCommand
 {
