@@ -2,9 +2,9 @@
 
 namespace Queueworker\SansDaemon;
 
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Queue\QueueServiceProvider;
 use Queueworker\SansDaemon\Console\WorkCommand;
+use Illuminate\Contracts\Foundation\Application;
 
 class SansDaemonServiceProvider extends QueueServiceProvider
 {
