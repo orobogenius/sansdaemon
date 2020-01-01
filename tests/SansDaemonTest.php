@@ -1,7 +1,7 @@
 <?php
 
-use Orchestra\Testbench\TestCase;
 use Illuminate\Queue\WorkerOptions;
+use Orchestra\Testbench\TestCase;
 
 class SansDaemonTest extends TestCase
 {
@@ -36,7 +36,7 @@ class SansDaemonTest extends TestCase
         ]);
 
         $this->assertEquals(0, $exitCode);
-        
+
         $this->assertTrue($job->fired);
     }
 
@@ -96,7 +96,7 @@ class SansDaemonTest extends TestCase
             'default' => [new FakeWorkerJob, (new FakeWorkerJob)->setNotAvailable()],
         ];
 
-        $this->worker->setManager($this->getManager('sync', $jobs));        
+        $this->worker->setManager($this->getManager('sync', $jobs));
 
         $exitCode = $this->artisan->call('queue:work', [
             '--sansdaemon' => true,
@@ -153,7 +153,7 @@ class FakeWorkerConnection
     }
 
     public function pop($queue)
-    {   
+    {
         [$availableJobs, $reservedJobs] = collect($this->jobs[$queue])->partition(function ($job) {
             return $job->available();
         });
