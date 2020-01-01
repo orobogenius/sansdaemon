@@ -2,9 +2,10 @@
 
 namespace Queueworker\SansDaemon\Console;
 
+use Illuminate\Contracts\Cache\Repository as Cache;
+use Illuminate\Queue\Console\WorkCommand as BaseWorkCommand;
 use Illuminate\Queue\Worker;
 use Queueworker\SansDaemon\Traits\SansDaemonWorkerTrait;
-use Illuminate\Queue\Console\WorkCommand as BaseWorkCommand;
 
 class WorkCommand extends BaseWorkCommand
 {
@@ -17,7 +18,7 @@ class WorkCommand extends BaseWorkCommand
      *
      * @return void
      */
-    public function __construct(Worker $worker)
+    public function __construct(Worker $worker, Cache $cache)
     {
         if (! defined('LARAVEL_START')) {
             define('LARAVEL_START', microtime(true));
@@ -33,7 +34,7 @@ class WorkCommand extends BaseWorkCommand
 
         $this->description .= ' or sans-daemon';
 
-        parent::__construct($worker);
+        parent::__construct($worker, $cache);
     }
 
     /**

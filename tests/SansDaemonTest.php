@@ -1,7 +1,7 @@
 <?php
 
-use Orchestra\Testbench\TestCase;
 use Illuminate\Queue\WorkerOptions;
+use Orchestra\Testbench\TestCase;
 
 class SansDaemonTest extends TestCase
 {
@@ -9,12 +9,13 @@ class SansDaemonTest extends TestCase
 
     protected $worker;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->artisan = $this->app->make('Illuminate\Contracts\Console\Kernel');
-        $this->worker = $this->app->make('queue.worker');
+
+        $this->worker = $this->app->make('queue.sansDaemonWorker');
     }
 
     public function testQueueWorkerCanRunInSansDaemonMode()
@@ -35,6 +36,7 @@ class SansDaemonTest extends TestCase
         ]);
 
         $this->assertEquals(0, $exitCode);
+
         $this->assertTrue($job->fired);
     }
 
@@ -82,6 +84,22 @@ class SansDaemonTest extends TestCase
 
         $exitCode = $this->artisan->call('queue:work', [
             '--sansdaemon' => true, '--max_exec_time' => 5,
+        ]);
+
+        $this->assertEquals(0, $exitCode);
+        $this->assertEquals(1, $this->worker->getManager()->connection('sync')->size('default'));
+    }
+
+    public function testQueueWorkerDoesNotWaitForNextJobIfUnavailable()
+    {
+        $jobs = [
+            'default' => [new FakeWorkerJob, (new FakeWorkerJob)->setNotAvailable()],
+        ];
+
+        $this->worker->setManager($this->getManager('sync', $jobs));
+
+        $exitCode = $this->artisan->call('queue:work', [
+            '--sansdaemon' => true,
         ]);
 
         $this->assertEquals(0, $exitCode);
@@ -136,7 +154,15 @@ class FakeWorkerConnection
 
     public function pop($queue)
     {
-        return array_shift($this->jobs[$queue]);
+        [$availableJobs, $reservedJobs] = collect($this->jobs[$queue])->partition(function ($job) {
+            return $job->available();
+        });
+
+        $nextJob = $availableJobs->shift();
+
+        $this->jobs[$queue] = $availableJobs->merge($reservedJobs);
+
+        return $nextJob;
     }
 
     public function size($queue)
@@ -160,6 +186,7 @@ class FakeWorkerJob extends \Illuminate\Queue\Jobs\Job implements \Illuminate\Co
     public $connectionName;
     public $shouldSleep;
     public $sleepFor;
+    public $isAvailable = true;
 
     public function __construct($shouldSleep = false, $sleepFor = 0)
     {
@@ -226,6 +253,18 @@ class FakeWorkerJob extends \Illuminate\Queue\Jobs\Job implements \Illuminate\Co
     {
         $this->markAsFailed();
         $this->failedWith = $e;
+    }
+
+    public function available()
+    {
+        return $this->isAvailable;
+    }
+
+    public function setNotAvailable()
+    {
+        $this->isAvailable = false;
+
+        return $this;
     }
 
     public function hasFailed()
