@@ -35,7 +35,7 @@ trait SansDaemonWorkerTrait
      * @return void
      */
     public function processJobs($connectionName, $queue)
-    {        
+    {
         foreach (explode(',', $queue) as $queue) {
             while ($this->shouldRunNextJob() && ! is_null($job = $this->getNextJob($connectionName, $queue))) {
                 $this->worker->runSansDaemonJob($job, $connectionName, parent::gatherWorkerOptions());
@@ -100,10 +100,10 @@ trait SansDaemonWorkerTrait
 
     /**
      * Get the queue connection.
-     * 
+     *
      * @param string|null $name
      * @return \Illuminate\Contracts\Queue\Queue
-    */
+     */
     protected function getConnection($name)
     {
         return $this->worker->getManager()->connection($name);

@@ -2,10 +2,10 @@
 
 namespace Queueworker\SansDaemon;
 
-use Illuminate\Queue\QueueServiceProvider;
-use Queueworker\SansDaemon\Console\WorkCommand;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Queue\QueueServiceProvider;
+use Queueworker\SansDaemon\Console\WorkCommand;
 
 class SansDaemonServiceProvider extends QueueServiceProvider
 {
@@ -25,9 +25,9 @@ class SansDaemonServiceProvider extends QueueServiceProvider
 
     /**
      * Configure the queue.
-     * 
+     *
      * @return void.
-    */
+     */
     protected function configureQueue()
     {
         if ($this->app->bound('queue.sansDaemonWorker')) {
@@ -38,7 +38,7 @@ class SansDaemonServiceProvider extends QueueServiceProvider
             $isDownForMaintenance = function () {
                 return $this->app->isDownForMaintenance();
             };
-            
+
             return new SansDaemonWorker(
                 $this->app['queue'],
                 $this->app['events'],
