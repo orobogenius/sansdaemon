@@ -14,7 +14,7 @@ class WorkCommand extends BaseWorkCommand
     /**
      * Create a new queue work command.
      *
-     * @param \Illuminate\Queue\Worker $worker
+     * @param \Illuminate\Queue\Worker  $worker
      *
      * @return void
      */
@@ -40,8 +40,8 @@ class WorkCommand extends BaseWorkCommand
     /**
      * Run the worker instance.
      *
-     * @param  string $connection
-     * @param  string $queue
+     * @param  string  $connection
+     * @param  string  $queue
      *
      * @return array
      */
