@@ -6,6 +6,7 @@ use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Queue\QueueServiceProvider;
 use Queueworker\SansDaemon\Console\WorkCommand;
+use Illuminate\Queue\Console\WorkCommand as QueueWorkCommand;
 
 class SansDaemonServiceProvider extends QueueServiceProvider
 {
@@ -55,8 +56,14 @@ class SansDaemonServiceProvider extends QueueServiceProvider
      */
     protected function registerWorkCommand()
     {
-        $this->app->extend('command.queue.work', function ($command, Application $app) {
-            return new WorkCommand($app['queue.sansDaemonWorker'], $app['cache.store']);
-        });
+        if (version_compare($this->app->version(), "9.0.0", ">=")) {
+            $this->app->extend(QueueWorkCommand::class, function ($command, Application $app) {
+                return new WorkCommand($app['queue.sansDaemonWorker'], $app['cache.store']);
+            });
+        } else {
+            $this->app->extend('command.queue.work', function ($command, Application $app) {
+                return new WorkCommand($app['queue.sansDaemonWorker'], $app['cache.store']);
+            });
+        }
     }
 }
