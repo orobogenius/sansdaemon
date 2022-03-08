@@ -41,7 +41,6 @@ class WorkCommand extends BaseWorkCommand
      *
      * @param  string  $connection
      * @param  string  $queue
-     *
      * @return array
      */
     protected function runWorker($connection, $queue)
