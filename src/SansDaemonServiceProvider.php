@@ -4,9 +4,9 @@ namespace Queueworker\SansDaemon;
 
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Queue\Console\WorkCommand as BaseWorkCommand;
 use Illuminate\Queue\QueueServiceProvider;
 use Queueworker\SansDaemon\Console\WorkCommand;
-use Illuminate\Queue\Console\WorkCommand as BaseWorkCommand;
 
 class SansDaemonServiceProvider extends QueueServiceProvider
 {
