@@ -67,7 +67,6 @@ trait SansDaemonWorkerTrait
      * Detect if the worker is running longer than the maximum execution time.
      *
      * @param  \Illuminate\Queue\WorkerOptions  $options
-     *
      * @return bool
      */
     protected function isOverMaxExecutionTime($options)
