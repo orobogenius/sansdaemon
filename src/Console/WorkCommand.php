@@ -14,8 +14,7 @@ class WorkCommand extends BaseWorkCommand
     /**
      * Create a new queue work command.
      *
-     * @param \Illuminate\Queue\Worker  $worker
-     *
+     * @param  \Illuminate\Queue\Worker  $worker
      * @return void
      */
     public function __construct(Worker $worker, Cache $cache)
