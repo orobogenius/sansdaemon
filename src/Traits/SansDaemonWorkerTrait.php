@@ -71,13 +71,15 @@ trait SansDaemonWorkerTrait
      */
     protected function isOverMaxExecutionTime($options)
     {
-        if ($options->maxExecutionTime <= 0) {
+        $max_exec_time = (int) $this->option('max_exec_time');
+
+        if ($max_exec_time <= 0) {
             return false;
         }
 
         $elapsedTime = microtime(true) - LARAVEL_START;
 
-        return $elapsedTime > $options->maxExecutionTime;
+        return $elapsedTime > $max_exec_time;
     }
 
     /**

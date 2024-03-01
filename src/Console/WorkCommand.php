@@ -53,18 +53,4 @@ class WorkCommand extends BaseWorkCommand
 
         parent::runWorker($connection, $queue);
     }
-
-    /**
-     * Gather all of the queue worker options as a single object.
-     *
-     * @return \Illuminate\Queue\WorkerOptions
-     */
-    protected function gatherWorkerOptions()
-    {
-        $options = parent::gatherWorkerOptions();
-        $options->jobs = $this->option('jobs');
-        $options->maxExecutionTime = intval($this->option('max_exec_time'));
-
-        return $options;
-    }
 }
